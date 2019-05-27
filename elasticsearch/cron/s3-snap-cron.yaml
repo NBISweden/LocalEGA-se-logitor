@@ -1,0 +1,30 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: s3-snapshot
+  namespace: myns
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: s3-snapshot
+            image: nbisweden/snapshot-s3
+            env:
+            - name: ELASTICSEARCH_SERVICE_HOST
+              value: "elastic-ega-master"
+            - name: ELASTICSEARCH_SERVICE_PORT
+              value: "9200" 
+            - name: REPOSITORY_NAME
+              value: "my_s3"
+            args:
+            - /bin/sh 
+            - -c
+            - "curl -X PUT http://$ELASTICSEARCH_SERVICE_HOST:$ELASTICSEARCH_SERVICE_PORT/_snapshot/$REPOSITORY_NAME -H 'Content-Type: application/json' -d '{ \"type\": \"s3\", \"settings\": { \"bucket\": \"bucket123\" } }'"
+          restartPolicy: OnFailure
+          hostNetwork: true
+          dnsPolicy: ClusterFirstWithHostNet
