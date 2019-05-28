@@ -3,15 +3,15 @@ In order to setup Elasticsearch, we use the official Helm chart maintained by El
 
 ## Installation
 
-* Add the Elastic Helm charts repo
+* Add the Elastic Helm charts repo.
   ```console
   helm repo add elastic https://helm.elastic.co
   ```
-* Configure the `elastic-vals.yaml` file according to your settings and install the chart
+* Configure the `elastic-vals.yaml` file according to your settings and install the chart.
   ```console
-  helm install --name elasticsearch -f elastic-vals.yaml --namespace=myns elastic/elasticsearch --version 7.1.0
+  helm install --name elasticsearch -f helm/elastic-vals.yaml --namespace=myns elastic/elasticsearch --version 7.1.0
   ```
-* Configure `fluentd` in your Rancher environment to talk to the newly deployed Elasticsearch service. This can be found under the logging settings in your project.
+* Configure a log exporter daemon like `fluentd`, `fluentbit` or `logstash` to talk to the newly deployed Elasticsearch service. If you are using Rancher, you can easily set this up in the logging settings of your project.
 
 * Verify that indexes were actually recorded by running:
   ```console
