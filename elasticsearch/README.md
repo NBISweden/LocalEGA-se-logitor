@@ -23,7 +23,7 @@ In order to setup Elasticsearch, we use the official Helm chart maintained by El
  * First, a S3 repository needs to be created for your snapshots. Please run:
  
    ```console
-   curl -X PUT http://$ELASTICSEARCH_SERVICE_HOST:$ELASTICSEARCH_SERVICE_PORT/_snapshot/$REPOSITORY_NAME -H 'Content-Type: application/json' -d '{ \"type\": \"s3\", \"settings\": { \"bucket\": \"bucket123\" } }'
+   curl -X PUT http://$ELASTICSEARCH_SERVICE_HOST:$ELASTICSEARCH_SERVICE_PORT/_snapshot/$REPOSITORY_NAME -H 'Content-Type: application/json' -d '{ "type": "s3", "settings": { "bucket": "bucket123" } }'
    ```
   
  * To automate the snapshot upload to the S3 backend, you can easily setup a cron job on Kubernetes. Please edit the configuration file to adapt it to your environment.
