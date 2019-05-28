@@ -9,7 +9,7 @@ cat /usr/share/elasticsearch/config/s3-keys/accesskey | bin/elasticsearch-keysto
 cat /usr/share/elasticsearch/config/s3-keys/secretkey | bin/elasticsearch-keystore add --stdin s3.client.default.secret_key
 
 echo "Removing credentials"
-rm -r /usr/share/elasticsearch/config/s3-keys
+#rm -r /usr/share/elasticsearch/config/s3-keys
 
 # Files created by Elasticsearch should always be group writable too
 umask 0002
