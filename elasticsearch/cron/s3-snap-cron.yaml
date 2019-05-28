@@ -24,7 +24,7 @@ spec:
             args:
             - /bin/sh 
             - -c
-            - "curl -X PUT http://$ELASTICSEARCH_SERVICE_HOST:$ELASTICSEARCH_SERVICE_PORT/_snapshot/$REPOSITORY_NAME -H 'Content-Type: application/json' -d '{ \"type\": \"s3\", \"settings\": { \"bucket\": \"bucket123\" } }'"
+            - "curl -X PUT http://$ELASTICSEARCH_SERVICE_HOST:$ELASTICSEARCH_SERVICE_PORT/_snapshot/$REPOSITORY_NAME/snapshot_$(date +%Y%m%d-%H%M%S-%s)?wait_for_completion=true -H 'Content-Type: application/json'"
           restartPolicy: OnFailure
           hostNetwork: true
           dnsPolicy: ClusterFirstWithHostNet
