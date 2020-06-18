@@ -1,6 +1,19 @@
 # Backing up Elasticsearch snapshots in a S3 data lake 
 In order to setup Elasticsearch, we use the official Helm chart maintained by Elastic which can be found [here](https://github.com/elastic/helm-charts/tree/master/elasticsearch)
 
+
+## Prerequisites
+
+Set up an S3 endpoint as follows:
+
+```
+kubectl create ns elastic
+```
+
+```
+helm install myminio stable/minio -n elastic --set accessKey=myaccesskey,secretKey=mysecretkey --version 5.0.30
+```
+
 ## Installation
 
 * Add the Elastic Helm charts repo.
@@ -9,7 +22,7 @@ In order to setup Elasticsearch, we use the official Helm chart maintained by El
   ```
 * Configure the `elastic-vals.yaml` file according to your settings and install the chart.
   ```console
-  helm install --name elasticsearch -f helm/elastic-vals.yaml --namespace=myns elastic/elasticsearch --version 7.1.0
+  helm install elasticsearch elastic/elasticsearch -f helm/elastic-vals.yaml -n elastic --version 7.7.1
   ```
 * Configure a log exporter daemon like `fluentd`, `fluentbit` or `logstash` to talk to the newly deployed Elasticsearch service. If you are using Rancher, you can easily set this up in the logging settings of your project.
 It is recommended to use an official Helm chart for this purpose: https://github.com/helm/charts/tree/master/stable/fluentd
