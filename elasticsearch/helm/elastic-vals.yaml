@@ -1,5 +1,5 @@
 ---
-clusterName: "elastic-sda"
+clusterName: "elasticsearch"
 nodeGroup: "master"
 
 # The service that non master groups will try to connect to when joining the cluster
@@ -13,7 +13,7 @@ roles:
   ingest: "true"
   data: "true"
 
-replicas: 3
+replicas: 2
 minimumMasterNodes: 2
 
 esMajorVersion: ""
@@ -48,7 +48,7 @@ secretMounts:
     path: /usr/share/elasticsearch/config/s3-keys
 
 image: "nbisweden/elasticsearch"
-imageTag: "latest"
+imageTag: "006"
 imagePullPolicy: "Always"
 
 podAnnotations: {}
@@ -132,9 +132,6 @@ extraContainers: []
   #   command: ['do', 'something']
 
 extraInitContainers: []
-  # - name: do-something
-  #   image: busybox
-  #   command: ['do', 'something']
 
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
@@ -191,7 +188,7 @@ securityContext:
   capabilities:
     drop:
     - ALL
-  readOnlyRootFilesystem: true
+      #readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
 
@@ -228,7 +225,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - ega.elastic.127.0.0.1.nip.io
+    - ega.elastic.129.16.123.117.nip.io
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -263,7 +260,13 @@ lifecycle: {}
 sysctlInitContainer:
   enabled: true
 
-keystore: []
+keystore:
+  - secretName: myminio
+    items:
+    - key: accesskey
+      path: s3.client.default.access_key
+    - key: secretkey
+      path: s3.client.default.secret_key
 
 # Deprecated
 # please use the above podSecurityContext.fsGroup instead
