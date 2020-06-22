@@ -49,7 +49,7 @@ secretMounts:
     path: /usr/share/elasticsearch/config/s3-keys
 
 image: "nbisweden/elasticsearch"
-imageTag: "006"
+imageTag: "015"
 imagePullPolicy: "Always"
 
 podAnnotations: {}
@@ -261,13 +261,13 @@ lifecycle: {}
 sysctlInitContainer:
   enabled: true
 
-keystore:
-  - secretName: myminio
-    items:
-    - key: accesskey
-      path: s3.client.default.access_key
-    - key: secretkey
-      path: s3.client.default.secret_key
+  #keystore:
+  #- secretName: myminio
+  #  items:
+  #  - key: accesskey
+  #    path: s3.client.default.access_key
+  #  - key: secretkey
+  #    path: s3.client.default.secret_key
 
 # Deprecated
 # please use the above podSecurityContext.fsGroup instead
