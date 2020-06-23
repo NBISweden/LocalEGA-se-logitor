@@ -4,7 +4,9 @@ In order to setup Elasticsearch, we use the official Helm chart maintained by El
 
 ## Prerequisites
 
-Set up an S3 endpoint as follows:
+* Configure a log exporter daemon like `fluentd`, `fluentbit` or `logstash`. See the logstash setup in this repository.
+
+* Set up an S3 endpoint as follows:
 
 ```
 kubectl create ns elastic
@@ -24,8 +26,6 @@ helm install myminio stable/minio -n elastic --set accessKey=myaccesskey,secretK
   ```console
   helm install elasticsearch elastic/elasticsearch -f helm/elastic-vals.yaml -n elastic --version 7.7.1
   ```
-* Configure a log exporter daemon like `fluentd`, `fluentbit` or `logstash` to talk to the newly deployed Elasticsearch service. If you are using Rancher, you can easily set this up in the logging settings of your project.
-It is recommended to use an official Helm chart for this purpose: https://github.com/helm/charts/tree/master/stable/fluentd
 
 * Verify that indexes were actually recorded by running:
   ```console
