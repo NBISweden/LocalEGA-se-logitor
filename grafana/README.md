@@ -5,12 +5,18 @@ In order to setup Grafana, we use the official Helm chart maintained by Kubernet
 
  * Configure the `grafana-vals.yaml` file according to your settings and install the chart.
   ```console
-  helm install --name grafana-ega -f grafana-vals.yaml stable/grafana
+  kubectl create ns grafana
+  helm install grafana stable/grafana -f helm/grafana-vals.yaml -n grafana --version 5.3.0
+  ```
+
+ * Make sure that the Grafana service is healthy:
+  ```console
+  kubectl get pods -n grafana
   ```
 
  * Extract your admin credentials from the grafana secret. The default user is `admin`. 
   ```console
-  kubectl get secret grafana-ega -o json | jq -c '.data."admin-password"' | tr -d '"' | base64 -D
+  kubectl get secret grafana -n grafana -o json | jq -c '.data."admin-password"' | tr -d '"' | base64 -D
   ```
   
  * Now you should be able to login into the dashboard and add a data source in the configuration. If using Elasticsearch, you will need to specify the format of your indices. This can be consulted by:
