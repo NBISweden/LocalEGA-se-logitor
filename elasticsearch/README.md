@@ -4,7 +4,6 @@ In order to setup Elasticsearch, we use the official Helm chart maintained by El
 
 ## Prerequisites
 
-* Configure a log exporter daemon like `fluentd`, `fluentbit` or `logstash`. See the logstash setup in this repository.
 
 * Set up an S3 endpoint as follows:
 
@@ -24,8 +23,10 @@ helm install myminio stable/minio -n elastic --set accessKey=myaccesskey,secretK
   ```
 * Configure the `elastic-vals.yaml` file according to your settings and install the chart.
   ```console
-  helm install elasticsearch elastic/elasticsearch -f helm/elastic-vals.yaml -n elastic --version 7.7.1
+  helm install elasticsearch elastic/elasticsearch -f helm/elastic-vals.yaml -n elastic --version 7.8.0
   ```
+
+* Configure a log exporter daemon like `filebeat`. See the filebeat setup in this repository.
 
 * Verify that indexes were actually recorded by running:
   ```console

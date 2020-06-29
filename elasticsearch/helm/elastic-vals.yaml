@@ -49,7 +49,7 @@ secretMounts:
     path: /usr/share/elasticsearch/config/s3-keys
 
 image: "nbisweden/elasticsearch"
-imageTag: "015"
+imageTag: "020"
 imagePullPolicy: "Always"
 
 podAnnotations: {}

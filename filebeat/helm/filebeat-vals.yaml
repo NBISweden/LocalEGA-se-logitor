@@ -3,6 +3,15 @@
 # such as filebeat.yml
 filebeatConfig:
   filebeat.yml: |
+    setup.template.name: "filebeat"
+    setup.template.pattern: "filebeat-*"
+    setup.ilm.enabled: false
+
+    #filebeat.autodiscover:
+    #  providers:
+    #    - type: kubernetes
+    #      hints.enabled: true
+
     filebeat.inputs:
     - type: container
       stream: stdout
@@ -16,8 +25,12 @@ filebeatConfig:
               logs_path: "/var/log/containers/"
 
     output.elasticsearch:
+      index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
       host: '${NODE_NAME}'
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+      #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+      #ssl.certificate: "/etc/pki/client/cert.pem"
+      #ssl.key: "/etc/pki/client/cert.key"
 
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
@@ -53,7 +66,7 @@ envFrom: []
 hostPathRoot: /var/lib
 hostNetworking: false
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.7.1"
+imageTag: "7.8.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
