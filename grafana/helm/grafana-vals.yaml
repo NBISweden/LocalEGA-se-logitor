@@ -1,6 +1,6 @@
 rbac:
   create: false
-  pspEnabled: true
+  pspEnabled: false
   pspUseAppArmor: true
   namespaced: false
   extraRoleRules: []
@@ -313,15 +313,18 @@ datasources:
   datasources.yaml:
     apiVersion: 1
     datasources:
-      - name: elasticsearch-v7-logs
+      - name: elasticsearch-v7-filebeat
         type: elasticsearch
-        access: direct
-        database: "[logstash-]YYYY.MM.DD"
-        url: http://elasticsearch-master:9200
+        access: proxy
+        database: "[filebeat-7.8.0-]YYYY.MM.DD"
+        url: http://elasticsearch-master.elastic.svc.cluster.local:9200
         jsonData:
           interval: Daily
           timeField: "@timestamp"
-          esVersion: 77
+          esVersion: 70
+          logMessageField: message
+          logLevelField: fields.level
+
 ## Configure notifiers
 ## ref: http://docs.grafana.org/administration/provisioning/#alert-notification-channels
 ##
