@@ -22,4 +22,21 @@ curl --location --request GET '$ELASTICSEARCH_HOST/$ES_INDEX/_search?pretty=true
     }
 }'
 ```
+* Or get the logs from a specific container tag in a given namespace over a specific time range:
+
+```console
+curl --location --request  GET '$ELASTICSEARCH_HOST/$ES_INDEX/_search?pretty=true&size=100' --header 'Content-Type: application/json' --data-raw '{
+    "query" : {
+        "bool": {
+        "must": [
+        { "match": { "kubernetes.container.image": "novella/svc-test:003" }}
+      ],
+        "filter": [
+            {"term": {"kubernetes.namespace": "default"}},
+            {"range": { "@timestamp": { "gte": "2020-06-28" }}}
+        ]
+    }
+    }
+}'
+```
   
