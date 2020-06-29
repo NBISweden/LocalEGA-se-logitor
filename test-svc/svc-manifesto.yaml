@@ -21,7 +21,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: test-svc
-        image: "novella/svc-test:002"
+        image: "novella/svc-test:003"
         ports:
         - containerPort: 8080
         env:
